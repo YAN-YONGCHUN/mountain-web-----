@@ -1,7 +1,6 @@
 // Netlify API 配置
-// 部署到 Netlify 后，请将 YOUR-SITE-NAME 替换为您的实际站点名称
-// 例如：https://memsavor.netlify.app/.netlify/functions
-const API_BASE_URL = 'https://YOUR-SITE-NAME.netlify.app/.netlify/functions';
+// 实际部署地址：https://memsavor.netlify.app
+const API_BASE_URL = 'https://memsavor.netlify.app/.netlify/functions';
 
 const TOKEN_KEY = 'memsavor_token';
 const USER_KEY = 'currentUser';
