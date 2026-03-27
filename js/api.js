@@ -1,4 +1,7 @@
-const API_BASE_URL = 'https://lvxing-pi.vercel.app';
+// Netlify API 配置
+// 部署到 Netlify 后，请将 YOUR-SITE-NAME 替换为您的实际站点名称
+// 例如：https://memsavor.netlify.app/.netlify/functions
+const API_BASE_URL = 'https://YOUR-SITE-NAME.netlify.app/.netlify/functions';
 
 const TOKEN_KEY = 'memsavor_token';
 const USER_KEY = 'currentUser';
@@ -52,7 +55,7 @@ async function request(endpoint, options = {}) {
         
         return data;
     } catch (error) {
-        console.error('API错误:', error);
+        console.error('API 错误:', error);
         if (error.message === 'Failed to fetch') {
             throw new Error('网络连接失败，请检查网络');
         }
@@ -67,7 +70,7 @@ const api = {
 
     async login(account, password) {
         try {
-            const data = await request('/api/auth/login', {
+            const data = await request('/auth/login', {
                 method: 'POST',
                 body: { account, password }
             });
@@ -85,7 +88,7 @@ const api = {
 
     async register(name, phone, password, email) {
         try {
-            const data = await request('/api/auth/register', {
+            const data = await request('/auth/register', {
                 method: 'POST',
                 body: { name, phone, password, email }
             });
@@ -103,7 +106,7 @@ const api = {
 
     async adminLogin(account, password) {
         try {
-            const data = await request('/api/auth/admin/login', {
+            const data = await request('/auth/admin/login', {
                 method: 'POST',
                 body: { account, password }
             });
@@ -127,72 +130,72 @@ const api = {
 
     async getMountains(params = {}) {
         const query = new URLSearchParams(params).toString();
-        return request(`/api/mountains${query ? '?' + query : ''}`);
+        return request(`/mountains${query ? '?' + query : ''}`);
     },
 
     async getMountain(id) {
-        return request(`/api/mountains/${id}`);
+        return request(`/mountains/${id}`);
     },
 
     async createMountain(data) {
-        return request('/api/mountains', {
+        return request('/mountains', {
             method: 'POST',
             body: data
         });
     },
 
     async updateMountain(id, data) {
-        return request(`/api/mountains/${id}`, {
+        return request(`/mountains/${id}`, {
             method: 'PUT',
             body: data
         });
     },
 
     async deleteMountain(id) {
-        return request(`/api/mountains/${id}`, {
+        return request(`/mountains/${id}`, {
             method: 'DELETE'
         });
     },
 
     async getUsers(params = {}) {
         const query = new URLSearchParams(params).toString();
-        return request(`/api/users${query ? '?' + query : ''}`);
+        return request(`/users${query ? '?' + query : ''}`);
     },
 
     async createUser(data) {
-        return request('/api/users', {
+        return request('/users', {
             method: 'POST',
             body: data
         });
     },
 
     async updateUser(phone, data) {
-        return request(`/api/users/${phone}`, {
+        return request(`/users/${phone}`, {
             method: 'PUT',
             body: data
         });
     },
 
     async deleteUser(phone) {
-        return request(`/api/users/${phone}`, {
+        return request(`/users/${phone}`, {
             method: 'DELETE'
         });
     },
 
     async getOrders(params = {}) {
         const query = new URLSearchParams(params).toString();
-        return request(`/api/orders${query ? '?' + query : ''}`);
+        return request(`/orders${query ? '?' + query : ''}`);
     },
 
     async createOrder(data) {
-        return request('/api/orders', {
+        return request('/orders', {
             method: 'POST',
             body: data
         });
     },
 
     async updateOrder(id, data) {
-        return request(`/api/orders/${id}`, {
+        return request(`/orders/${id}`, {
             method: 'PUT',
             body: data
         });
@@ -200,18 +203,18 @@ const api = {
 
     async getRentals(params = {}) {
         const query = new URLSearchParams(params).toString();
-        return request(`/api/rentals${query ? '?' + query : ''}`);
+        return request(`/rentals${query ? '?' + query : ''}`);
     },
 
     async createRental(data) {
-        return request('/api/rentals', {
+        return request('/rentals', {
             method: 'POST',
             body: data
         });
     },
 
     async returnRental(id, data) {
-        return request(`/api/rentals/${id}`, {
+        return request(`/rentals/${id}`, {
             method: 'PUT',
             body: data
         });
@@ -219,81 +222,81 @@ const api = {
 
     async getPartners(params = {}) {
         const query = new URLSearchParams(params).toString();
-        return request(`/api/partners${query ? '?' + query : ''}`);
+        return request(`/partners${query ? '?' + query : ''}`);
     },
 
     async getMyPartners() {
-        return request('/api/partners/my');
+        return request('/partners/my');
     },
 
     async getPartnerApplications() {
-        return request('/api/partners/applications');
+        return request('/partners/applications');
     },
 
     async createPartner(data) {
-        return request('/api/partners', {
+        return request('/partners', {
             method: 'POST',
             body: data
         });
     },
 
     async applyPartner(partnerId, message) {
-        return request('/api/partners/apply', {
+        return request('/partners/apply', {
             method: 'POST',
             body: { partnerId, message }
         });
     },
 
     async approveApplication(appId) {
-        return request(`/api/partners/applications/${appId}/approve`, {
+        return request(`/partners/applications/${appId}/approve`, {
             method: 'POST'
         });
     },
 
     async rejectApplication(appId) {
-        return request(`/api/partners/applications/${appId}/reject`, {
+        return request(`/partners/applications/${appId}/reject`, {
             method: 'POST'
         });
     },
 
     async updatePartner(id, data) {
-        return request(`/api/partners/${id}`, {
+        return request(`/partners/${id}`, {
             method: 'PUT',
             body: data
         });
     },
 
     async deletePartner(id) {
-        return request(`/api/partners/${id}`, {
+        return request(`/partners/${id}`, {
             method: 'DELETE'
         });
     },
 
     async getProducts(params = {}) {
         const query = new URLSearchParams(params).toString();
-        return request(`/api/products${query ? '?' + query : ''}`);
+        return request(`/products${query ? '?' + query : ''}`);
     },
 
     async getProduct(id) {
-        return request(`/api/products/${id}`);
+        return request(`/products/${id}`);
     },
 
     async createProduct(data) {
-        return request('/api/products', {
+        return request('/products', {
             method: 'POST',
             body: data
         });
     },
 
     async updateProduct(id, data) {
-        return request(`/api/products/${id}`, {
+        return request(`/products/${id}`, {
             method: 'PUT',
             body: data
         });
     },
 
     async deleteProduct(id) {
-        return request(`/api/products/${id}`, {
+        return request(`/products/${id}`, {
             method: 'DELETE'
         });
     }
