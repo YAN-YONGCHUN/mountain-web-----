@@ -330,11 +330,15 @@
             const account = document.getElementById('adminAccount').value.trim();
             const password = document.getElementById('adminPassword').value;
             const remember = document.getElementById('rememberAdmin').checked;
+            const submitBtn = document.querySelector('.btn-primary');
             
             if (!account || !password) {
                 showToast('请填写完整信息', 'error');
                 return;
             }
+            
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 登录中...';
             
             try {
                 const result = await api.adminLogin(account, password);
@@ -353,6 +357,9 @@
                 }
             } catch (error) {
                 showToast(error.message || '登录失败', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i><span>安全登录</span>';
             }
         }
 

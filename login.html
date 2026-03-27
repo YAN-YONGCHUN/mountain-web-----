@@ -391,11 +391,15 @@
             
             const account = document.getElementById('loginAccount').value.trim();
             const password = document.getElementById('loginPassword').value;
+            const submitBtn = document.querySelector('#loginForm .btn-primary');
             
             if (!account || !password) {
                 showToast('请填写完整信息', 'error');
                 return;
             }
+            
+            submitBtn.disabled = true;
+            submitBtn.textContent = '登录中...';
             
             try {
                 const result = await api.login(account, password);
@@ -407,6 +411,9 @@
                 }
             } catch (error) {
                 showToast(error.message || '登录失败，请重试', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = '登 录';
             }
         }
 
@@ -417,6 +424,7 @@
             const phone = document.getElementById('regPhone').value.trim();
             const password = document.getElementById('regPassword').value;
             const confirmPassword = document.getElementById('regConfirmPassword').value;
+            const submitBtn = document.querySelector('#registerForm .btn-primary');
             
             if (!name || !phone || !password) {
                 showToast('请填写完整信息', 'error');
@@ -438,6 +446,9 @@
                 return;
             }
             
+            submitBtn.disabled = true;
+            submitBtn.textContent = '注册中...';
+            
             try {
                 const result = await api.register(name, phone, password);
                 if (result.success) {
@@ -448,6 +459,9 @@
                 }
             } catch (error) {
                 showToast(error.message || '注册失败，请重试', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = '注 册';
             }
         }
 

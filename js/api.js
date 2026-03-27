@@ -46,12 +46,16 @@ async function request(endpoint, options = {}) {
         const data = await response.json();
         
         if (!response.ok) {
-            throw new Error(data.message || '请求失败');
+            const errorMsg = data.message || '请求失败';
+            throw new Error(errorMsg);
         }
         
         return data;
     } catch (error) {
-        console.error('API Error:', error);
+        console.error('API错误:', error);
+        if (error.message === 'Failed to fetch') {
+            throw new Error('网络连接失败，请检查网络');
+        }
         throw error;
     }
 }
@@ -62,45 +66,57 @@ const api = {
     removeToken,
 
     async login(account, password) {
-        const data = await request('/api/auth/login', {
-            method: 'POST',
-            body: { account, password }
-        });
-        
-        if (data.success) {
-            setToken(data.data.token);
-            localStorage.setItem(USER_KEY, JSON.stringify(data.data.user));
+        try {
+            const data = await request('/api/auth/login', {
+                method: 'POST',
+                body: { account, password }
+            });
+            
+            if (data.success) {
+                setToken(data.data.token);
+                localStorage.setItem(USER_KEY, JSON.stringify(data.data.user));
+            }
+            
+            return data;
+        } catch (error) {
+            throw new Error(error.message || '登录失败，请重试');
         }
-        
-        return data;
     },
 
     async register(name, phone, password, email) {
-        const data = await request('/api/auth/register', {
-            method: 'POST',
-            body: { name, phone, password, email }
-        });
-        
-        if (data.success) {
-            setToken(data.data.token);
-            localStorage.setItem(USER_KEY, JSON.stringify(data.data.user));
+        try {
+            const data = await request('/api/auth/register', {
+                method: 'POST',
+                body: { name, phone, password, email }
+            });
+            
+            if (data.success) {
+                setToken(data.data.token);
+                localStorage.setItem(USER_KEY, JSON.stringify(data.data.user));
+            }
+            
+            return data;
+        } catch (error) {
+            throw new Error(error.message || '注册失败，请重试');
         }
-        
-        return data;
     },
 
     async adminLogin(account, password) {
-        const data = await request('/api/auth/admin/login', {
-            method: 'POST',
-            body: { account, password }
-        });
-        
-        if (data.success) {
-            setToken(data.data.token);
-            localStorage.setItem('adminUser', JSON.stringify(data.data.admin));
+        try {
+            const data = await request('/api/auth/admin/login', {
+                method: 'POST',
+                body: { account, password }
+            });
+            
+            if (data.success) {
+                setToken(data.data.token);
+                localStorage.setItem('adminUser', JSON.stringify(data.data.admin));
+            }
+            
+            return data;
+        } catch (error) {
+            throw new Error(error.message || '管理员登录失败');
         }
-        
-        return data;
     },
 
     logout() {
