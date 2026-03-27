@@ -1,4 +1,4 @@
-const API_BASE_URL = 'https://your-vercel-app.vercel.app';
+const API_BASE_URL = 'https://lvxing-pi.vercel.app';
 
 const TOKEN_KEY = 'memsavor_token';
 const USER_KEY = 'currentUser';
