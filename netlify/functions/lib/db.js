@@ -17,7 +17,7 @@ function initializeData() {
                 name: '登山爱好者',
                 phone: '13800138000',
                 email: 'demo@example.com',
-                password: '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZRGdjGj/n3.eG1H2Ijz8VZL8YfV2a',
+                password: '123456',
                 status: 'active',
                 registerTime: '2024-01-01',
                 climbCount: 10
